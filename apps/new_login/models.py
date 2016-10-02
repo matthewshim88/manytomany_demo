@@ -14,7 +14,7 @@ class UserManager(models.Manager):
             response['errors'] = errors
         else:
             password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
-            new_user = self.create(first_name = data['fname'], last_name = data['lname'], alias = data['alias'], email = data['email'], password=password, birthday=data['birthday'])
+            new_user = self.create(first_name = data['fname'], last_name = data['lname'], alias = data['alias'], email = data['email'], password=password)
             response['created'] = True
             response['new_user'] = new_user
         return response
@@ -90,7 +90,6 @@ class User(models.Model):
     alias = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    birthday = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = UserManager()
